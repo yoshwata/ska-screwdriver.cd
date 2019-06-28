@@ -16,31 +16,27 @@ deploy:
   #       - "-n plex"
   helm:
     releases:
-    - name: plex
-      namespace: plex
-      chartPath: kube-plex/charts/kube-plex
+    - name: screwdriver-cd
+      namespace: test-screwdriver
+      chartPath: screwdriver-chart
       #wait: true
       #valuesFiles:
       #- helm-skaffold-values.yaml
       overrides:
-        image:
-          repository: linuxserver/plex
-          tag: arm32v7-latest
-        claimToken: claim-Fk7YkZqveq9eyCBMj6HA
-        persistence:
-          data:
-            claimName: nfs-claim1
-          config:
-            size: 2Gi
-        kubePlex:
-          image:
-            repository: yoshwata/kube-plex_linux_arm7l
-        service:
-          type: ClusterIP
-          externalIPs:
-            - 192.168.1.12
-        volume:
-          server: 192.168.1.12
+        api:
+          externalIPs: 172.21.110.170
+          image: screwdrivercd/screwdriver:latest
+        ui:
+          image: screwdrivercd/ui:latest
+        store:
+          image: screwdrivercd/store:latest
+        launcher:
+          version: latest
+        ingress:
+          hosts:
+            api: dev.yoshwata.k3s.master001.ssk.ynwm.yahoo.co.jp
+            ui: dev.yoshwata.k3s.master001.ssk.ynwm.yahoo.co.jp
+            store: dev.yoshwata.k3s.master001.ssk.ynwm.yahoo.co.jp
       #recreatePods will pass --recreate-pods to helm upgrade
       #recreatePods: true
       #overrides builds an override values.yaml file to run with the helm deploy
