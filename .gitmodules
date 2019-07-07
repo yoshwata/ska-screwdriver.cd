@@ -1,3 +1,6 @@
 [submodule "screwdriver-chart"]
 	path = screwdriver-chart
 	url = https://github.com/yoshwata/screwdriver-chart
+[submodule "screwdriver"]
+	path = screwdriver
+	url = https://github.com/screwdriver-cd/screwdriver.git
